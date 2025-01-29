@@ -24,31 +24,26 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-      <h1 className="text-2xl font-bold text-center mb-6">Forgot Password</h1>
-      {message && <p className="text-center">{message}</p>}
+    <div className="container">
+      <h2>Forgot Password</h2>
+      {message && <div className="alert alert-info">{message}</div>}
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">Email</label>
+        <div className="mb-3">
           <input
             type="email"
+            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-primary"
+            className="form-control"
             required
           />
         </div>
-        <button
-          type="submit"
-          className="w-full bg-primary text-white py-2 rounded-lg hover:bg-opacity-90 transition duration-300 shadow-3d"
-        >
+        <button type="submit" className="btn btn-primary w-100">
           Send Reset Link
         </button>
       </form>
-      <div className="mt-4 text-center">
-        <Link to="/login" className="text-primary hover:underline">
-          Back to Login
-        </Link>
+      <div className="mt-3">
+        <Link to="/login">Back to Login</Link>
       </div>
     </div>
   );
