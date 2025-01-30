@@ -9,14 +9,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-su%l#+l8w#+w^88cyf&0ne1%=btl&s66jiwz7ve44xyww37&4_"
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
@@ -24,34 +20,30 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
 ]
 
-# Application definition
 INSTALLED_APPS = [
-    # Default Django apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django.contrib.sites",  # Required for allauth
+    "django.contrib.sites",  
     
-    # Third-party apps
     "allauth",
     "allauth.account",
-    "allauth.socialaccount",  # Optional: For social authentication
+    "allauth.socialaccount",  
     "corsheaders",
     "rest_framework",
     "rest_framework.authtoken",
     
-    # Custom apps
     "accounts",
 ]
-CORS_ALLOW_CREDENTIALS = True  # Allow cookies (CSRF token)
-CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]  # Allow frontend
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]  # Allow frontend
+CORS_ALLOW_CREDENTIALS = True  
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]  
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]  
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # Should be placed at the top
+    'corsheaders.middleware.CorsMiddleware', 
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -62,14 +54,14 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True  # Allows all origins (not recommended for production)
+CORS_ALLOW_ALL_ORIGINS = True  
 
 ROOT_URLCONF = "authbase.urls"
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],  # Add templates directory
+        "DIRS": [BASE_DIR / "templates"],  
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -84,7 +76,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "authbase.wsgi.application"
 
-# Database
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -92,7 +83,6 @@ DATABASES = {
     }
 }
 
-# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -111,23 +101,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = "static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]  # Add static files directory
+STATICFILES_DIRS = [BASE_DIR / "static"]  
 
-# Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Custom User Model
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-# Allauth Settings
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/login/'
@@ -136,12 +121,11 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_LOGOUT_ON_GET = True
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Set to 'mandatory' in production
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'noreply@authbase.com'
 
-# REST Framework Settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
