@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,5 +14,138 @@
     </form>
     <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
     <p>Forgot your password? <a href="{% url 'forgot_password' %}">Reset Password</a></p>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Reset Default Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8; /* Light, soft background */
+            color: #333333; /* Dark text for better readability */
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 3rem; /* Space between form and links */
+        }
+        h1 {
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            color: #4caf50; /* Greenish color */
+        }
+        form {
+            background-color: #ffffff; /* White background */
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            width: 400px;
+        }
+        form p {
+            margin-bottom: 1rem;
+            color: #333333;
+        }
+        form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd; /* Light border */
+            border-radius: 50px;
+            background-color: #f0f0f0; /* Soft background */
+            color: #333333;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        form input:focus {
+            outline: none;
+            border-color: #4caf50; /* Green focus */
+        }
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4caf50; /* Green */
+            color: #ffffff; /* White text */
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        }
+        button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2); /* Soft hover effect */
+            background-color: #388e3c; /* Darker green on hover */
+        }
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+            background-color: #388e3c; /* Darker green on click */
+        }
+        a {
+            color: #4caf50; /* Green links */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #333333; /* Dark text on hover */
+        }
+        .error {
+            color: #ff4d4d; /* Soft red for errors */
+            margin: 1rem 0;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column; /* Stack form and links vertically */
+                gap: 2rem;
+            }
+            form {
+                width: 100%;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form method="post" id="loginForm">
+            {% csrf_token %}
+            <h1>Login</h1>
+            <p>
+                <label for="{{ form.username.id_for_label }}">Username or Email:</label>
+                {{ form.username }}
+                {{ form.username.errors }}
+            </p>
+            <p>
+                <label for="{{ form.password.id_for_label }}">Password:</label>
+                {{ form.password }}
+                {{ form.password.errors }}
+            </p>
+            <button type="submit">Login</button>
+        </form>
+        <div>
+            <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
+            <p>Forgot your password? <a href="{% url 'forgot_password' %}">Reset Password</a></p>
+        </div>
+    </div>
 </body>
 </html>

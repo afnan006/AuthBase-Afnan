@@ -4,14 +4,267 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
+    <style>
+        /* Reset Default Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8; /* Light, soft background */
+            color: #333333; /* Dark text for better readability */
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 3rem; /* Space between form and constraints */
+        }
+        h1 {
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            color: #4caf50; /* Greenish color */
+        }
+        form {
+            background-color: #ffffff; /* White background */
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            width: 400px;
+        }
+        form p {
+            margin-bottom: 1rem;
+            color: #333333;
+        }
+        form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd; /* Light border */
+            border-radius: 50px;
+            background-color: #f0f0f0; /* Soft background */
+            color: #333333;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        form input:focus {
+            outline: none;
+            border-color: #4caf50; /* Green focus */
+        }
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4caf50; /* Green */
+            color: #ffffff; /* White text */
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        }
+        button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2); /* Soft hover effect */
+            background-color: #388e3c; /* Darker green on hover */
+        }
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+            background-color: #388e3c; /* Darker green on click */
+        }
+        a {
+            color: #4caf50; /* Green links */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #333333; /* Dark text on hover */
+        }
+        .error {
+            color: #ff4d4d; /* Soft red for errors */
+            margin: 1rem 0;
+        }
+        /* Password Constraints Styling */
+        .password-constraints {
+            margin-top: 1rem;
+            text-align: left;
+            font-size: 0.9rem;
+            color: #333333;
+        }
+        .constraint {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .constraint-icon {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+        .valid {
+            color: #4caf50; /* Green for valid */
+        }
+        .invalid {
+            color: #ff4d4d; /* Red for invalid */
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column; /* Stack form and constraints vertically */
+                gap: 2rem;
+            }
+            form {
+                width: 100%;
+                padding: 1.5rem;
+            }
+            .password-constraints {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Sign Up</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Sign Up</button>
-    </form>
-    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+    <div class="container">
+        <form method="post" id="signupForm">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <h1>Sign Up</h1>
+            <p>
+                <label for="{{ form.username.id_for_label }}">Username:</label>
+                {{ form.username }}
+                {{ form.username.errors }}
+            </p>
+            <p>
+                <label for="{{ form.email.id_for_label }}">Email:</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </p>
+            <p>
+                <label for="{{ form.password1.id_for_label }}">Password:</label>
+                {{ form.password1 }}
+                {{ form.password1.errors }}
+            </p>
+            <p>
+                <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
+                {{ form.password2 }}
+                {{ form.password2.errors }}
+            </p>
+            <button type="submit">Sign Up</button>
+        </form>
+        <div class="password-constraints">
+            <div class="constraint" id="lengthConstraint">
+                <span class="constraint-icon invalid" id="lengthIcon">❌</span>
+                At least 7 characters long
+            </div>
+            <div class="constraint" id="uppercaseConstraint">
+                <span class="constraint-icon invalid" id="uppercaseIcon">❌</span>
+                Contains at least one uppercase letter
+            </div>
+            <div class="constraint" id="lowercaseConstraint">
+                <span class="constraint-icon invalid" id="lowercaseIcon">❌</span>
+                Contains at least one lowercase letter
+            </div>
+            <div class="constraint" id="numberConstraint">
+                <span class="constraint-icon invalid" id="numberIcon">❌</span>
+                Contains at least one number
+            </div>
+            <div class="constraint" id="specialCharConstraint">
+                <span class="constraint-icon invalid" id="specialCharIcon">❌</span>
+                Contains at least one special character (!@#$%^&*()_+)
+            </div>
+            <div class="center-links">
+                <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+                <p>Forgot your password? <a href="{% url 'forgot_password' %}">Reset Password</a></p>
+            </div>
+            
+            <style>
+                .center-links {
+                    text-align: center;
+                    margin-top: 2rem;
+                }
+                .center-links a {
+                    color: #4caf50; /* Green links */
+                    text-decoration: none;
+                }
+                .center-links a:hover {
+                    color: #333333; /* Dark text on hover */
+                }
+            </style>
+        </div>
+    </div>
+    
+    
+
+    <script>
+        // Real-time password validation
+        const passwordField = document.getElementById('{{ form.password1.id_for_label }}');
+        const lengthIcon = document.getElementById('lengthIcon');
+        const uppercaseIcon = document.getElementById('uppercaseIcon');
+        const lowercaseIcon = document.getElementById('lowercaseIcon');
+        const numberIcon = document.getElementById('numberIcon');
+        const specialCharIcon = document.getElementById('specialCharIcon');
+        passwordField.addEventListener('input', () => {
+            const password = passwordField.value;
+            // Check length
+            if (password.length >= 7) {
+                lengthIcon.textContent = '✅';
+                lengthIcon.classList.remove('invalid');
+                lengthIcon.classList.add('valid');
+            } else {
+                lengthIcon.textContent = '❌';
+                lengthIcon.classList.remove('valid');
+                lengthIcon.classList.add('invalid');
+            }
+            // Check uppercase
+            if (/[A-Z]/.test(password)) {
+                uppercaseIcon.textContent = '✅';
+                uppercaseIcon.classList.remove('invalid');
+                uppercaseIcon.classList.add('valid');
+            } else {
+                uppercaseIcon.textContent = '❌';
+                uppercaseIcon.classList.remove('valid');
+                uppercaseIcon.classList.add('invalid');
+            }
+            // Check lowercase
+            if (/[a-z]/.test(password)) {
+                lowercaseIcon.textContent = '✅';
+                lowercaseIcon.classList.remove('invalid');
+                lowercaseIcon.classList.add('valid');
+            } else {
+                lowercaseIcon.textContent = '❌';
+                lowercaseIcon.classList.remove('valid');
+                lowercaseIcon.classList.add('invalid');
+            }
+            // Check number
+            if (/[0-9]/.test(password)) {
+                numberIcon.textContent = '✅';
+                numberIcon.classList.remove('invalid');
+                numberIcon.classList.add('valid');
+            } else {
+                numberIcon.textContent = '❌';
+                numberIcon.classList.remove('valid');
+                numberIcon.classList.add('invalid');
+            }
+            // Check special character
+            if (/[!@#$%^&*()_+]/.test(password)) {
+                specialCharIcon.textContent = '✅';
+                specialCharIcon.classList.remove('invalid');
+                specialCharIcon.classList.add('valid');
+            } else {
+                specialCharIcon.textContent = '❌';
+                specialCharIcon.classList.remove('valid');
+                specialCharIcon.classList.add('invalid');
+            }
+        });
+    </script>
 </body>
 </html>

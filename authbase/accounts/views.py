@@ -10,7 +10,8 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from .forms import SignupForm, LoginForm, ChangePasswordForm
 from django.contrib.auth import get_user_model
-
+from django.http import JsonResponse
+from django.middleware.csrf import get_token
 CustomUser = get_user_model()
 
 
@@ -27,6 +28,9 @@ def signup(request):
         form = SignupForm()
     return render(request, 'accounts/signup.html', {'form': form})
 
+def get_csrf_token(request):
+    csrf_token = get_token(request)
+    return JsonResponse({'csrfToken': csrf_token})
 
 def user_login(request):
     if request.method == 'POST':
