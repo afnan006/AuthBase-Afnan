@@ -43,7 +43,7 @@ A robust Django-based authentication system with comprehensive user management f
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/afnan006/Authbase.git
+git clone https://github.com/afnan006/AuthBase-Afnan.git
 cd authbase
 ```
 
